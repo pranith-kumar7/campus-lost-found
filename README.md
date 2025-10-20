@@ -29,4 +29,4 @@ A web application built with the MERN stack (MongoDB, Express, React, Node.js) t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/USERNAME/REPO_NAME.git
+   git clone https://github.com/pranith-kumar7/campus-lost-found.git
