@@ -20,7 +20,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-lg shadow-lg">
-      {/* 1. Changed to max-w-screen-2xl to prevent infinite stretching on ultrawide monitors */}
+      {/* Container max width */}
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           
@@ -44,14 +44,13 @@ export default function Navbar() {
           </Link>
 
           {/* DESKTOP MENU WRAPPER */}
-          {/* 2. Used flex-1 and justify-between to push navigation left and profile right */}
           <div className="hidden md:flex flex-1 items-center justify-between ml-8">
             
             {/* ZONE 1: Navigation Links (Left Side) */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
               <Link
                 to="/"
-                className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                   location.pathname === "/"
                     ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                     : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -69,7 +68,7 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/dashboard"
-                    className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       location.pathname === "/dashboard"
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                         : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -85,7 +84,7 @@ export default function Navbar() {
 
                   <Link
                     to="/my-claims"
-                    className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       location.pathname === "/my-claims"
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                         : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -101,7 +100,7 @@ export default function Navbar() {
 
                   <Link
                     to="/my-reports"
-                    className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       isReportsRoute
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                         : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -118,21 +117,21 @@ export default function Navbar() {
                   <Link
                     to="/inbox"
                     aria-label="Open inbox"
-                    className={`rounded-full p-3 transition-all duration-200 ${
+                    className={`whitespace-nowrap rounded-full p-3 transition-all duration-200 ${
                       isInboxRoute
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                         : "bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-blue-600"
                     }`}
                   >
                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.121C2.493 12.806 2 11.451 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zm-11-1a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1zm1 3a1 1 0 100 2h5a1 1 0 100-2H8zm-1-6a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.121C2.493 12.806 2 11.451 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zm-11-1a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 110 2H8a1 1 0 01-1-1zm1 3a1 1 0 100 2h5a1 1 0 100-2H8zm-1-6a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
                     </svg>
                   </Link>
 
                   {user.role === "admin" && (
                     <Link
                       to="/verify-users"
-                      className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                      className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                         location.pathname === "/admin-dashboard"
                           ? "bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg"
                           : "text-slate-700 hover:bg-slate-100 hover:text-red-600"
@@ -147,7 +146,7 @@ export default function Navbar() {
                     </Link>
                   )}
 
-                  <Link to="/admin-dashboard" className="rounded-full px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-red-600">
+                  <Link to="/admin-dashboard" className="whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-red-600">
                     Admin Dashboard
                   </Link>
                 </>
@@ -155,7 +154,6 @@ export default function Navbar() {
             </div>
 
             {/* ZONE 2: Profile & Logout (Right Side) */}
-            {/* 3. Added a left border and padding to cleanly separate this zone */}
             <div className="flex items-center gap-4 border-l border-slate-200 pl-6">
               {user ? (
                 <>
@@ -164,8 +162,8 @@ export default function Navbar() {
                       {user.name.charAt(0).toUpperCase()}
                     </div>
                     <div className="hidden sm:block">
-                      <div className="text-sm font-medium text-slate-900">{user.name}</div>
-                      <div className="text-xs text-slate-500 capitalize">{user.role}</div>
+                      <div className="text-sm font-medium text-slate-900 whitespace-nowrap">{user.name}</div>
+                      <div className="text-xs text-slate-500 capitalize whitespace-nowrap">{user.role}</div>
                     </div>
                     <div className="flex items-center gap-1">
                       {user.isVerified ? (
@@ -178,7 +176,7 @@ export default function Navbar() {
 
                   <button
                     onClick={handleLogout}
-                    className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-600 transition-all duration-200 hover:bg-red-100 hover:border-red-300"
+                    className="whitespace-nowrap rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-600 transition-all duration-200 hover:bg-red-100 hover:border-red-300"
                   >
                     <span className="flex items-center gap-2">
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -192,7 +190,7 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/login"
-                    className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
+                    className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       location.pathname === "/login"
                         ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                         : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -202,7 +200,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/signup"
-                    className="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-2 text-xs font-medium text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
+                    className="whitespace-nowrap rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-2 text-xs font-medium text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
                   >
                     Sign Up
                   </Link>
