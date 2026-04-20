@@ -62,7 +62,7 @@ const VerifyUsers = () => {
               onClick={() => navigate(`/verify-users/${user._id}`)}
             >
               <img
-                src={`${API_BASE_URL}/${user.idCard}`}
+                src={user.idCard}
                 alt="College ID"
                 className="w-24 h-24 object-cover rounded-md border border-gray-300 mx-auto mb-4"
               />
@@ -99,3 +99,4 @@ const VerifyUsers = () => {
 };
 
 export default VerifyUsers;
+

@@ -14,7 +14,7 @@ export default function AdminPage() {
   const fetchItems = async () => {
     try {
       setLoading(true);
-      const res = await API.get("/items");
+      const res = await API.get("/items/all");
       setItems(res.data);
 
       if (!activeClaimId) {
@@ -159,7 +159,7 @@ export default function AdminPage() {
                         </button>
                         {claim?.proof && (
                           <img
-                            src={`${API_BASE_URL}/${claim.proof}`}
+                            src={claim.proof}
                             alt="proof"
                             className="mt-2 h-32 w-32 rounded-md object-cover"
                           />
@@ -266,3 +266,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+

@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-lg shadow-lg">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full px-4 sm:px-8 lg:px-12">
         <div className="flex h-16 items-center justify-between">
           <Link
             to="/"
@@ -45,10 +45,10 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-4 lg:gap-6 md:flex">
             <Link
               to="/"
-              className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                 location.pathname === "/"
                   ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                   : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -66,7 +66,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/dashboard"
-                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                     location.pathname === "/dashboard"
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                       : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -82,7 +82,7 @@ export default function Navbar() {
 
                 <Link
                   to="/my-claims"
-                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                     location.pathname === "/my-claims"
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                       : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -98,7 +98,7 @@ export default function Navbar() {
 
                 <Link
                   to="/my-reports"
-                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                     isReportsRoute
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                       : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -128,8 +128,8 @@ export default function Navbar() {
 
                 {user.role === "admin" && (
                   <Link
-                    to="/admin-dashboard"
-                    className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                    to="/verify-users"
+                    className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                       location.pathname === "/admin-dashboard"
                         ? "bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg"
                         : "text-slate-700 hover:bg-slate-100 hover:text-red-600"
@@ -139,12 +139,12 @@ export default function Navbar() {
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" />
                       </svg>
-                      Admin
+                      Verify Users
                     </span>
                   </Link>
                 )}
 
-                <div className="h-6 w-px bg-slate-300 mx-2"></div>
+                <Link to="/admin-dashboard" className="rounded-full px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 hover:text-red-600">Admin Dashboard</Link><div className="h-6 w-px bg-slate-300 mx-2"></div>
 
                 <div className="flex items-center gap-3 rounded-full bg-gradient-to-r from-slate-100 to-slate-200 px-4 py-2">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
@@ -165,7 +165,7 @@ export default function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-100 hover:border-red-300"
+                  className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-medium text-red-600 transition-all duration-200 hover:bg-red-100 hover:border-red-300"
                 >
                   <span className="flex items-center gap-2">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -179,7 +179,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-200 ${
+                  className={`rounded-full px-3 py-2 text-xs font-medium transition-all duration-200 ${
                     location.pathname === "/login"
                       ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
                       : "text-slate-700 hover:bg-slate-100 hover:text-blue-600"
@@ -189,7 +189,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/signup"
-                  className="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
+                  className="rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-3 py-2 text-xs font-medium text-white shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-105"
                 >
                   Sign Up
                 </Link>
@@ -266,13 +266,13 @@ export default function Navbar() {
                   </Link>
                   {user.role === "admin" && (
                     <Link
-                      to="/admin-dashboard"
+                      to="/verify-users"
                       className={`block rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
                         location.pathname === "/admin-dashboard" ? "bg-red-50 text-red-600" : "text-slate-700 hover:bg-slate-50"
                       }`}
                       onClick={closeMenu}
                     >
-                      Admin Panel
+                      Verify Users
                     </Link>
                   )}
                   <div className="border-t border-slate-200 pt-2 mt-4">
@@ -323,3 +323,18 @@ export default function Navbar() {
     </nav>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
