@@ -45,6 +45,16 @@ export const createItem = async (req, res, next) => {
   }
 };
 
+export const getAllItems = async (req, res, next) => {
+  try {
+    const items = await Item.find({ status: "Verified" });
+    const hydratedItems = await Promise.all(items.map((item) => hydrateClaims(item)));
+    res.status(200).json(hydratedItems);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getItems = async (req, res, next) => {
   try {
     const items = await Item.find({ status: "Verified" })
@@ -288,4 +298,6 @@ export const getMyItems = async (req, res, next) => {
     next(err);
   }
 };
+
+
 

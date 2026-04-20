@@ -4,7 +4,7 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
 import Item from "../models/Item.js";
 import {
-  createItem, getItems, getItemById, updateItem, deleteItem,
+  createItem, getItems, getAllItems, getItemById, updateItem, deleteItem,
   verifyItem, claimItem, verifyClaim, reportItem, resolveReport,
   getMyReports, getMyItems,
 } from "../controllers/itemController.js";
@@ -31,6 +31,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter });
 
 router.get("/", getItems);
+router.get("/all", protect, admin, getAllItems);
 router.get("/mine", protect, getMyItems);
 router.get("/reports/my", protect, getMyReports);
 
@@ -73,3 +74,4 @@ router.post("/", protect, verifiedUser, upload.single("itemImage"), async (req, 
 });
 
 export default router;
+
