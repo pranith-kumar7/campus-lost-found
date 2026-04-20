@@ -22,7 +22,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-white/95 backdrop-blur-lg shadow-lg">
       {/* Container max width */}
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
           
           {/* LOGO SECTION */}
           <Link
