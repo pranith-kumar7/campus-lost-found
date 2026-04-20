@@ -1,103 +1,70 @@
 import express from "express";
-import fs from "fs";
-import Item from "../models/Item.js";
 import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import { v2 as cloudinary } from "cloudinary";
+import Item from "../models/Item.js";
 import {
-  createItem,
-  getItems,
-  getItemById,
-  updateItem,
-  deleteItem,
-  verifyItem,
-  claimItem,
-  verifyClaim,
-  reportItem,
-  resolveReport,
-  getMyReports,
-  getMyItems,
+  createItem, getItems, getItemById, updateItem, deleteItem,
+  verifyItem, claimItem, verifyClaim, reportItem, resolveReport,
+  getMyReports, getMyItems,
 } from "../controllers/itemController.js";
 import { protect, verifiedUser, admin } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// Ensure uploads folder exists
-const uploadDir = "uploads/";
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// Multer setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: { folder: "items", allowed_formats: ["jpg", "jpeg", "png"] },
 });
 
 const fileFilter = (req, file, cb) => {
-  if (!file.mimetype.startsWith("image/")) return cb(new Error("Only image files are allowed!"), false);
+  if (!file.mimetype.startsWith("image/")) return cb(new Error("Only image files allowed"), false);
   cb(null, true);
 };
 
 const upload = multer({ storage, fileFilter });
 
-// Public routes
 router.get("/", getItems);
 router.get("/mine", protect, getMyItems);
 router.get("/reports/my", protect, getMyReports);
 
-// Create new item
-
-// Single item routes
 router.route("/:id")
   .get(getItemById)
   .put(protect, updateItem)
   .delete(protect, deleteItem);
 
-// Admin verify
 router.put("/:id/verify", protect, admin, verifyItem);
 
-// Claims
-router.post("/:id/claim", protect, (req, res, next) => {
-  upload.single("proof")(req, res, async (err) => {
-    if (err) return res.status(400).json({ message: err.message });
-    if (req.file) req.body.proof = `uploads/${req.file.filename}`;
-    await claimItem(req, res, next);
-  });
+router.post("/:id/claim", protect, upload.single("proof"), async (req, res, next) => {
+  if (req.file) req.body.proof = req.file.path;
+  await claimItem(req, res, next);
 });
+
 router.put("/:id/claim/verify", protect, admin, verifyClaim);
 
-// Reports
-router.post("/:id/report", protect, verifiedUser, async (req, res, next) => {
-  await reportItem(req, res, next);
-});
-router.put("/:id/report/resolve", protect, admin, async (req, res, next) => {
-  await resolveReport(req, res, next);
-});
+router.post("/:id/report", protect, verifiedUser, reportItem);
+router.put("/:id/report/resolve", protect, admin, resolveReport);
 
-router.post("/",protect, verifiedUser, upload.single("itemImage"), async (req, res) => {
+router.post("/", protect, verifiedUser, upload.single("itemImage"), async (req, res) => {
   try {
-    console.log("Request body:", req.body);
-    console.log("Request file:", req.file);
-
-    const { name, type, category, description,contact } = req.body;
-
-    if (!name || !type || !category || !contact) {
+    const { name, type, category, description, contact } = req.body;
+    if (!name || !type || !category || !contact)
       return res.status(400).json({ message: "Missing required fields" });
-    }
-     // Make sure protect middleware sets req.user
-      if (!req.user || !req.user._id) {
-        return res.status(401).json({ message: "Unauthorized: user info missing" });
-      }
-
+    if (!req.user?._id)
+      return res.status(401).json({ message: "Unauthorized" });
     const newItem = new Item({
-      name,
-      type,
-      category,
-      description,
-      contact,
-      proofImage: req.file ? req.file.path.replace(/\\/g, "/"): null,
+      name, type, category, description, contact,
+      proofImage: req.file ? req.file.path : null,
       reportedBy: req.user._id,
     });
-
     await newItem.save();
-    const populatedItem = await newItem.populate("reportedBy", "name email phone");
+    await newItem.populate("reportedBy", "name email phone");
     res.status(201).json({ message: "Item created successfully", newItem });
   } catch (err) {
     console.error("Report item error:", err);
