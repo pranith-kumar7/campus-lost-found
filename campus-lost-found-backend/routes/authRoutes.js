@@ -23,7 +23,7 @@ router.post("/signup", uploadCollegeId.single("collegeId"), async (req, res) => 
       email,
       password,
       role: role || "student",
-      idCard: `uploads/collegeIds/${file.filename}`, // ✅ correct path
+      idCard: file.path, // ✅ correct path
       isVerified: role === "admin" ? true : false,
     });
 
