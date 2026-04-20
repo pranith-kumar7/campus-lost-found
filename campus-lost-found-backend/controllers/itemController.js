@@ -47,7 +47,7 @@ export const createItem = async (req, res, next) => {
 
 export const getItems = async (req, res, next) => {
   try {
-    const items = await Item.find()
+    const items = await Item.find({ status: "Verified" })
       .populate("reportedBy", "name email phone isVerified role")
       .populate("reports.reportedBy", "name email phone");
 
@@ -288,3 +288,4 @@ export const getMyItems = async (req, res, next) => {
     next(err);
   }
 };
+
