@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import ItemCard from "../components/ItemCard";
+import { getStoredUser } from "../utils/storage";
 
 export default function Home() {
   const [items, setItems] = useState([]);
@@ -10,7 +11,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
 
   const fetchItems = async () => {
     try {

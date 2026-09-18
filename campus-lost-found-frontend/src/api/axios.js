@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../config";
+import { getStoredUser } from "../utils/storage";
 
 const API = axios.create({
   baseURL: API_URL,
@@ -11,7 +12,7 @@ const API = axios.create({
 });
 
 API.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
   const token = user?.token;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;

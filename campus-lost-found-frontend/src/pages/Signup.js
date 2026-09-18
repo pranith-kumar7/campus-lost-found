@@ -158,7 +158,7 @@ export default function Signup() {
               id="collegeId"
               name="collegeId"
               type="file"
-              accept="image/*,application/pdf"
+              accept="image/*"
               required
               className="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-slate-900 file:px-4 file:py-3 file:text-sm file:font-medium file:text-white hover:file:bg-sky-700"
               onChange={(e) => setCollegeId(e.target.files[0])}

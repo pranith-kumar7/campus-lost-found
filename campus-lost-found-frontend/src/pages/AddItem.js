@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
+import { getStoredUser } from "../utils/storage";
 
 export default function AddItem() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("electronics");
-  const [type, setType] = useState("lost");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
+  const [type, setType] = useState("Lost");
+  const [contact, setContact] = useState("");
   const [proofImage, setProofImage] = useState(null);
   const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export default function AddItem() {
       toast.error("You must be verified to add items.");
       return;
     }
-    if (!name || !description || !location || !date || !proofImage) {
+    if (!name || !description || !category || !contact || !proofImage) {
       toast.error("Please fill in all required fields and upload a proof image.");
       return;
     }
@@ -31,9 +31,8 @@ export default function AddItem() {
     formData.append("description", description);
     formData.append("category", category);
     formData.append("type", type);
-    formData.append("location", location);
-    formData.append("date", date);
-    formData.append("proofImage", proofImage);
+    formData.append("contact", contact);
+    formData.append("itemImage", proofImage);
 
     try {
       await API.post("/items", formData, {
@@ -79,22 +78,15 @@ export default function AddItem() {
         </select>
 
         <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="lost">Lost</option>
-          <option value="found">Found</option>
+          <option value="Lost">Lost</option>
+          <option value="Found">Found</option>
         </select>
 
         <input
           type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        />
-
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
+          placeholder="Contact details"
+          value={contact}
+          onChange={(e) => setContact(e.target.value)}
           required
         />
 

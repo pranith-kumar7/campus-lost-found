@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import API from "../api/axios";
 import { toast } from "react-toastify";
+import { getStoredUser } from "../utils/storage";
 
 export default function ReportItem({ onItemReported }) {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("Lost");

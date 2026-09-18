@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
+import { mediaUrl } from "../utils/media";
 
 export default function ItemCard({ item, user, onItemUpdated }) {
   const [claiming, setClaiming] = useState(false);
@@ -114,7 +114,7 @@ export default function ItemCard({ item, user, onItemUpdated }) {
         {/* Image and Badge */}
         <div className="relative overflow-hidden">
           <img
-            src={item.proofImage ? `${API_BASE_URL}/${item.proofImage}` : "/placeholder.png"}
+            src={item.proofImage ? mediaUrl(item.proofImage) : "/placeholder.png"}
             alt={`Image of ${item.name} - ${item.description || 'No description'}`}
             className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
             loading="lazy"
@@ -282,7 +282,7 @@ export default function ItemCard({ item, user, onItemUpdated }) {
               ✕
             </button>
             <img
-              src={`${API_BASE_URL}/${item.proofImage}`}
+              src={mediaUrl(item.proofImage)}
               alt={`Preview of ${item.name}`}
               className="max-w-full max-h-[80vh] object-contain"
               id="preview-title"

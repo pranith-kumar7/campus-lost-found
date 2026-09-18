@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
 
-export default function Login() {
+export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +24,7 @@ export default function Login() {
       }
 
       localStorage.setItem("user", JSON.stringify({ ...user, token }));
+      onLogin?.();
       toast.success(`Welcome, ${user.name}!`);
       navigate("/");
     } catch (err) {

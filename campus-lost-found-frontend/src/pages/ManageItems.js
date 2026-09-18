@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
+import { getStoredUser } from "../utils/storage";
 
 export default function ManageItems() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
   const [items, setItems] = useState([]);
 
   // Redirect if not logged in or not admin
@@ -20,7 +21,7 @@ export default function ManageItems() {
     if (!user) return;
     const fetchItems = async () => {
       try {
-        const res = await API.get("/items", {
+        const res = await API.get("/items/all", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         setItems(res.data);
@@ -57,12 +58,12 @@ export default function ManageItems() {
         <div className="items-grid">
           {items.map((item) => (
             <div key={item._id} className="item-card">
-              <h3 className="item-title">{item.title}</h3>
+              <h3 className="item-title">{item.name}</h3>
               <p className="item-status">
                 Status: <strong>{item.status}</strong>
               </p>
               <p>
-                Verified: <strong>{item.isVerified ? "Yes" : "No"}</strong>
+                Type: <strong>{item.type}</strong>
               </p>
               <button
                 className="delete-btn"

@@ -3,11 +3,12 @@ import API from "../api/axios";
 import ItemCard from "../components/ItemCard";
 import ReportItem from "../components/ReportItem";
 import { toast } from "react-toastify";
+import { getStoredUser } from "../utils/storage";
 
 export default function Dashboard() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
 
   const fetchItems = async () => {
     setLoading(true);

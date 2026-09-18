@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/axios";
 import { toast } from "react-toastify";
+import { getStoredUser } from "../utils/storage";
 
 export default function MyClaims() {
   const [claims, setClaims] = useState([]);
@@ -19,8 +20,9 @@ export default function MyClaims() {
   const fetchMyClaims = async () => {
     try {
       const res = await API.get("/claims/my-claims");
+      const user = getStoredUser();
       const onlyMyClaims = res.data.filter(
-        (claim) => String(claim.claimedBy?._id || claim.claimedBy) === String(JSON.parse(localStorage.getItem("user"))?._id)
+        (claim) => String(claim.claimedBy?._id || claim.claimedBy) === String(user?._id)
       );
       setClaims(onlyMyClaims);
     } catch (err) {

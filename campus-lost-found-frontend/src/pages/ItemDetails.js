@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
+import { mediaUrl } from "../utils/media";
+import { getStoredUser } from "../utils/storage";
 
 export default function ItemDetails() {
   const { id } = useParams();
@@ -13,7 +14,7 @@ export default function ItemDetails() {
   const [claimReason, setClaimReason] = useState("");
   const [reporting, setReporting] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const user = getStoredUser() || {};
 
   const fetchItem = async () => {
     try {
@@ -107,7 +108,7 @@ export default function ItemDetails() {
         <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
           {item.proofImage ? (
             <img
-              src={`${API_BASE_URL}/${item.proofImage}`}
+              src={mediaUrl(item.proofImage)}
               alt={item.name}
               className="h-[360px] w-full object-cover"
             />
@@ -197,7 +198,7 @@ export default function ItemDetails() {
                   <p className="mt-2 text-sm text-slate-700"><strong>Status:</strong> {claim.claimStatus}</p>
                   {claim.proof && (
                     <img
-                      src={`${API_BASE_URL}/${claim.proof}`}
+                      src={mediaUrl(claim.proof)}
                       alt="Claim proof"
                       className="mt-4 h-48 w-full rounded-2xl object-cover"
                     />

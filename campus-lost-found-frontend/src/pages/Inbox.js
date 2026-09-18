@@ -4,11 +4,12 @@ import AdminPage from "./AdminPage";
 import ClaimConversation from "../components/ClaimConversation";
 import API from "../api/axios";
 import { useEffect, useState } from "react";
+import { getStoredUser } from "../utils/storage";
 
 function StudentInbox() {
   const [claims, setClaims] = useState([]);
   const [activeClaimId, setActiveClaimId] = useState(null);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
 
   const fetchClaims = async () => {
     const res = await API.get("/claims/my-claims");
@@ -82,7 +83,7 @@ function StudentInbox() {
 }
 
 export default function Inbox() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
 
   if (!user) {
     return <Navigate to="/login" replace />;

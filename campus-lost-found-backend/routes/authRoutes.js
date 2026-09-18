@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import { uploadCollegeId } from "../middleware/upload.js";
 import jwt from "jsonwebtoken";
+import { protect, admin } from "../middleware/auth.js";
 
 const router = express.Router();
 const generateToken = (id, role) =>
@@ -80,7 +81,7 @@ router.post("/login", async (req, res) => {
 });
 
 // ================== GET ALL UNVERIFIED USERS (Admin only) ==================
-router.get("/unverified", async (req, res) => {
+router.get("/unverified", protect, admin, async (req, res) => {
   try {
     const unverifiedUsers = await User.find({ role: "student", isVerified: false }).select("-password");
     res.status(200).json(unverifiedUsers);
@@ -91,7 +92,7 @@ router.get("/unverified", async (req, res) => {
 });
 
 // ================== VERIFY A STUDENT (Admin only) ==================
-router.put("/verify/:id", async (req, res) => {
+router.put("/verify/:id", protect, admin, async (req, res) => {
   try {
     const userId = req.params.id;
     const user = await User.findById(userId);
@@ -111,7 +112,7 @@ router.put("/verify/:id", async (req, res) => {
 
 
 // GET single user by ID
-router.get("/user/:id", async (req, res) => {
+router.get("/user/:id", protect, admin, async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password"); // Exclude password
     if (!user) {

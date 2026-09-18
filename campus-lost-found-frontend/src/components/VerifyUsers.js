@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
-import { API_BASE_URL } from "../config";
 import { toast } from "react-toastify";
+import { mediaUrl } from "../utils/media";
 
 const VerifyUsers = () => {
   const [users, setUsers] = useState([]);
@@ -62,7 +62,7 @@ const VerifyUsers = () => {
               onClick={() => navigate(`/verify-users/${user._id}`)}
             >
               <img
-                src={user.idCard}
+                src={mediaUrl(user.idCard)}
                 alt="College ID"
                 className="w-24 h-24 object-cover rounded-md border border-gray-300 mx-auto mb-4"
               />

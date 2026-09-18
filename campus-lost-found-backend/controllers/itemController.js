@@ -47,7 +47,10 @@ export const createItem = async (req, res, next) => {
 
 export const getAllItems = async (req, res, next) => {
   try {
-    const items = await Item.find({ status: "Verified" });
+    const items = await Item.find({})
+      .populate("reportedBy", "name email phone isVerified role")
+      .populate("reports.reportedBy", "name email phone role")
+      .sort({ createdAt: -1 });
     const hydratedItems = await Promise.all(items.map((item) => hydrateClaims(item)));
     res.status(200).json(hydratedItems);
   } catch (err) {

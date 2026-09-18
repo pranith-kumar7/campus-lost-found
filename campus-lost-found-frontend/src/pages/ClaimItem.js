@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
+import { mediaUrl } from "../utils/media";
+import { getStoredUser } from "../utils/storage";
 
 export default function ClaimItem() {
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user || user.role !== "admin") {
-    return (
-      <p style={{ textAlign: "center", marginTop: "50px", fontSize: "18px", color: "red" }}>
-        Unauthorized. Admins only.
-      </p>
-    );
-  }
-
+  const user = getStoredUser();
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState({});
@@ -32,8 +24,12 @@ export default function ClaimItem() {
   };
 
   useEffect(() => {
-    fetchClaims();
-  }, []);
+    if (user?.role === "admin") {
+      fetchClaims();
+    } else {
+      setLoading(false);
+    }
+  }, [user?.role]);
 
   const handleClaimAction = async (claimId, status) => {
     setProcessing((prev) => ({ ...prev, [claimId]: true }));
@@ -54,6 +50,14 @@ export default function ClaimItem() {
       setProcessing((prev) => ({ ...prev, [claimId]: false }));
     }
   };
+
+  if (!user || user.role !== "admin") {
+    return (
+      <p style={{ textAlign: "center", marginTop: "50px", fontSize: "18px", color: "red" }}>
+        Unauthorized. Admins only.
+      </p>
+    );
+  }
 
   if (loading) return <p style={{ textAlign: "center" }}>Loading claims...</p>;
   if (claims.length === 0) return <p style={{ textAlign: "center" }}>No pending claims.</p>;
@@ -78,7 +82,7 @@ export default function ClaimItem() {
 
             {claim.proof && (
               <img
-                src={`${API_BASE_URL}/${claim.proof}`}
+                src={mediaUrl(claim.proof)}
                 alt="Proof"
                 className="proof-img"
               />

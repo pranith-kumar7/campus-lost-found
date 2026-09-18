@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
+import { mediaUrl } from "../utils/media";
 
 const VerifyUserDetails = () => {
   const { id } = useParams();
@@ -49,10 +49,10 @@ const VerifyUserDetails = () => {
       <h2 className="details-title">{user.name}</h2>
       <div className="details-card">
         <img
-          src={`${API_BASE_URL}/${user.idCard}`}
+          src={mediaUrl(user.idCard)}
           alt="College ID"
           className="details-image"
-          onClick={() => setPreview(`${API_BASE_URL}/${user.idCard}`)}
+          onClick={() => setPreview(mediaUrl(user.idCard))}
         />
         <div className="details-info">
           <p><strong>Email:</strong> {user.email}</p>

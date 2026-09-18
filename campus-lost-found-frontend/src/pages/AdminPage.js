@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
 import ClaimConversation from "../components/ClaimConversation";
+import { mediaUrl } from "../utils/media";
+import { getStoredUser } from "../utils/storage";
 
 export default function AdminPage() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeClaimId, setActiveClaimId] = useState(null);
 
-  const user = JSON.parse(localStorage.getItem("user")) || { role: "admin", token: "" };
+  const user = getStoredUser() || { role: "admin", token: "" };
 
   const fetchItems = async () => {
     try {
@@ -159,7 +160,7 @@ export default function AdminPage() {
                         </button>
                         {claim?.proof && (
                           <img
-                            src={claim.proof}
+                            src={mediaUrl(claim.proof)}
                             alt="proof"
                             className="mt-2 h-32 w-32 rounded-md object-cover"
                           />

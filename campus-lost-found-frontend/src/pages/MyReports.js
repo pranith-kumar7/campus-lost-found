@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import API from "../api/axios";
 import { toast } from "react-toastify";
-import { API_BASE_URL } from "../config";
+import { mediaUrl } from "../utils/media";
 
 const getBadgeClasses = (status) =>
   status === "Resolved"
@@ -75,7 +75,7 @@ export default function MyReports() {
                   <div key={item._id} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
                     {item.proofImage ? (
                       <img
-                        src={`${API_BASE_URL}/${item.proofImage}`}
+                        src={mediaUrl(item.proofImage)}
                         alt={item.name}
                         className="h-52 w-full object-cover"
                       />
@@ -122,7 +122,7 @@ export default function MyReports() {
                   <div key={report._id} className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
                     {report.item?.proofImage ? (
                       <img
-                        src={`${API_BASE_URL}/${report.item.proofImage}`}
+                        src={mediaUrl(report.item.proofImage)}
                         alt={report.item.name}
                         className="h-52 w-full object-cover"
                       />

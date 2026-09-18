@@ -1,6 +1,7 @@
 // src/api/axios.js
 import axios from "axios";
 import { API_URL } from "../config";
+import { getStoredUser } from "./storage";
 
 const API = axios.create({
   baseURL: API_URL,
@@ -8,7 +9,7 @@ const API = axios.create({
 
 // Automatically attach JWT token from localStorage
 API.interceptors.request.use((config) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = getStoredUser();
   if (user?.token) {
     config.headers.Authorization = `Bearer ${user.token}`;
   }
