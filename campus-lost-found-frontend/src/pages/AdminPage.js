@@ -85,6 +85,7 @@ export default function AdminPage() {
       item,
     }))
   );
+  const pendingItemsCount = items.filter((item) => item.status !== "Verified").length;
 
   const handleConversationUpdate = (updatedClaim) => {
     setItems((prev) =>
@@ -101,16 +102,16 @@ export default function AdminPage() {
     <div className="mx-auto max-w-7xl px-4 py-10">
       <div className="mb-8 rounded-[2rem] bg-[linear-gradient(135deg,#0f172a_0%,#1d4ed8_60%,#38bdf8_100%)] p-8 text-white shadow-xl">
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">Admin Panel</p>
-        <h2 className="mt-3 text-3xl font-bold">Review items, claims, and reports</h2>
+        <h2 className="mt-3 text-3xl font-bold">Review pending items, claims, and reports</h2>
         <p className="mt-2 max-w-2xl text-sm text-sky-50/90">
-          This dashboard helps you verify reports quickly and resolve suspicious activity without losing context.
+          {pendingItemsCount} item{pendingItemsCount === 1 ? "" : "s"} waiting for verification.
         </p>
       </div>
 
       {loading ? (
         <p className="text-center text-slate-600">Loading items...</p>
       ) : items.length === 0 ? (
-        <p className="text-center text-slate-600">No items found.</p>
+        <p className="text-center text-slate-600">No reported items found yet.</p>
       ) : (
         <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_420px]">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">

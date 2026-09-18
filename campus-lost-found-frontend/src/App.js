@@ -41,7 +41,16 @@ function App() {
             <Route path="/login" element={!user ? <Login onLogin={refreshUser} /> : <Navigate to="/" replace />} />
             <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" replace />} />
             <Route path="/verify-users" element={user?.role === "admin" ? <VerifyUsers /> : <Navigate to="/" replace />} />
-            <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" replace />} />
+            <Route
+              path="/dashboard"
+              element={
+                user?.role === "admin"
+                  ? <Navigate to="/admin-dashboard" replace />
+                  : user
+                    ? <Dashboard />
+                    : <Navigate to="/login" replace />
+              }
+            />
             <Route path="/admin-dashboard" element={user?.role === "admin" ? <AdminPage /> : <Navigate to="/" replace />} />
             
             {/* Item Details Page */}
