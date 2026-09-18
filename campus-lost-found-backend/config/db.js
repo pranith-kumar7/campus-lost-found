@@ -6,7 +6,7 @@ const connectDB = async () => {
       throw new Error("MONGO_URI is required");
     }
 
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, { dbName: "lostfound" });
     console.log("MongoDB connected");
   } catch (err) {
     console.error("MongoDB connection error:", err.message);

@@ -124,6 +124,14 @@ export default function AdminPage() {
                   {item?.status === "Verified" ? "Verified" : "Pending"}
                 </p>
 
+                {item?.proofImage && (
+                  <img
+                    src={mediaUrl(item.proofImage)}
+                    alt={item?.name || "Reported item"}
+                    className="mb-4 h-56 w-full rounded-2xl object-cover"
+                  />
+                )}
+
                 {item?.status !== "Verified" && (
                   <button
                     onClick={() => handleVerifyItem(item._id)}
