@@ -1,27 +1,19 @@
-import multer from "multer";
-import { CloudinaryStorage } from "multer-storage-cloudinary";
-import { v2 as cloudinary } from "cloudinary";
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: "collegeIds",
-    allowed_formats: ["jpg", "jpeg", "png"],
-  },
-});
+const allowedMimeTypes = new Set(["image/jpeg", "image/png"]);
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image/")) {
+  if (allowedMimeTypes.has(file.mimetype)) {
     cb(null, true);
-  } else {
-    cb(new Error("Only image files are allowed"), false);
+    return;
   }
+
+  cb(new Error("Only JPEG and PNG images are allowed"), false);
 };
 
-export const uploadCollegeId = multer({ storage, fileFilter });
+export const uploadCollegeId = multer({
+  storage,
+  fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+    files: 1,
+  },
+});
