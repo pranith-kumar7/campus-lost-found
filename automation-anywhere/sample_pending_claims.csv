@@ -1,0 +1,5 @@
+Claim ID,Item Name,Claimant Name,Email,Phone,Contact,Reason,Status,Claimed Date
+TEST-CLM-001,Blue Backpack,Test User One,test.one@example.com,9000000001,test.one@example.com,Contains my notebook and ID card,Pending,2026-11-10
+TEST-CLM-002,Wireless Mouse,Test User Two,test.two@example.com,9000000002,9000000002,Has a small scratch near the scroll wheel,Pending,2026-11-11
+TEST-CLM-003,Water Bottle,Test User Three,test.three@example.com,9000000003,,Has a name sticker on the bottom,Pending,2026-11-11
+TEST-CLM-004,USB Drive,Test User Four,test.four@example.com,9000000004,test.four@example.com,,Pending,2026-11-12
